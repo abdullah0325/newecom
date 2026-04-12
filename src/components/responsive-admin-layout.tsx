@@ -102,7 +102,7 @@ function AdminSidebar({ admin, onClose }: { admin: any; onClose?: () => void }) 
       <motion.aside
         initial={{ x: -280 }}
         animate={{ x: 0 }}
-        className="fixed left-0 top-0 z-50 h-screen w-64 bg-[#1E1F1C] text-white md:static md:z-40"
+        className="h-full w-64 bg-[#1E1F1C] text-white"
       >
         <div className="flex h-16 items-center justify-between border-b border-white/10 px-4">
           <Link href="/admin/dashboard" className="text-lg font-bold text-[#C6A24A]">
@@ -140,10 +140,10 @@ function AdminSidebar({ admin, onClose }: { admin: any; onClose?: () => void }) 
         <div className="border-t border-white/10 p-4">
           <div className="mb-3 flex items-center gap-3">
             <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#C6A24A] text-sm font-bold text-[#1E1F1C]">
-              {admin.name?.[0] || admin.email[0].toUpperCase()}
+              {admin?.name?.[0] || admin?.email?.[0]?.toUpperCase() || "A"}
             </div>
             <div className="flex-1 overflow-hidden">
-              <p className="truncate text-sm font-medium">{admin.name || admin.email}</p>
+              <p className="truncate text-sm font-medium">{admin?.name || admin?.email || "Admin"}</p>
               <p className="truncate text-xs text-gray-400">Admin</p>
             </div>
           </div>
@@ -156,13 +156,6 @@ function AdminSidebar({ admin, onClose }: { admin: any; onClose?: () => void }) 
               <FiUser className="h-4 w-4" />
               Profile
             </Link>
-            <Link
-              href="/api/auth/signout"
-              className="flex items-center justify-center rounded-lg bg-red-500/20 px-3 py-2 text-sm font-medium text-red-400 hover:bg-red-500/30"
-            >
-              <FiLogOut className="h-4 w-4" />
-              Logout
-            </Link>
           </div>
         </div>
       </motion.aside>
@@ -170,7 +163,7 @@ function AdminSidebar({ admin, onClose }: { admin: any; onClose?: () => void }) 
   );
 }
 
-export function AdminMobileHeader({ adminName }: { adminName: string }) {
+export function AdminMobileHeader({ admin }: { admin: any }) {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -223,7 +216,7 @@ export function AdminMobileHeader({ adminName }: { adminName: string }) {
               exit={{ opacity: 0 }}
               className="fixed inset-0 z-50 md:hidden"
             >
-              <AdminSidebar admin={adminName} onClose={() => setIsMenuOpen(false)} />
+              <AdminSidebar admin={admin} onClose={() => setIsMenuOpen(false)} />
             </motion.div>
           </>
         )}
@@ -241,7 +234,7 @@ export function ResponsiveAdminLayout({
 }) {
   return (
     <div className="min-h-screen bg-[#F6F1E7]">
-      <div className="hidden md:block">
+      <div className="hidden md:block fixed left-0 top-0 w-64 h-screen">
         <AdminSidebar admin={admin} />
       </div>
       
@@ -250,7 +243,7 @@ export function ResponsiveAdminLayout({
           <AdminTopbarSimple admin={admin} />
         </div>
         
-        <AdminMobileHeader adminName={admin.name || admin.email} />
+        <AdminMobileHeader admin={admin} />
         
         <main className="pb-20 md:pb-0">
           {children}
