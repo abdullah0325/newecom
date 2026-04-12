@@ -93,24 +93,39 @@ export function AdminMobileNav() {
   );
 }
 
-function AdminSidebar({ admin, onClose }: { admin: any; onClose?: () => void }) {
+function AdminSidebar({ admin, onClose, isMobile = false }: { admin: any; onClose?: () => void; isMobile?: boolean }) {
   const pathname = usePathname();
 
   return (
     <>
-      <div className="fixed inset-0 z-40 bg-black/50 md:hidden" onClick={onClose} />
+      {isMobile && onClose && (
+        <div 
+          className="fixed inset-0 z-40 bg-black/50" 
+          onClick={(e) => {
+            e.stopPropagation();
+            onClose();
+          }} 
+        />
+      )}
       <motion.aside
-        initial={{ x: -280 }}
+        initial={isMobile ? { x: -280 } : false}
         animate={{ x: 0 }}
-        className="h-full w-64 bg-[#1E1F1C] text-white"
+        className={isMobile 
+          ? "fixed left-0 top-0 z-50 h-screen w-64 bg-[#1E1F1C] text-white"
+          : "h-full w-64 bg-[#1E1F1C] text-white"
+        }
       >
         <div className="flex h-16 items-center justify-between border-b border-white/10 px-4">
-          <Link href="/admin/dashboard" className="text-lg font-bold text-[#C6A24A]">
-            OrganoCity Admin
-          </Link>
-          <button onClick={onClose} className="p-2 md:hidden">
-            <FiX className="h-5 w-5" />
-          </button>
+          <div className="flex-1">
+            <Link href="/admin/dashboard" className="text-lg font-bold text-[#C6A24A]">
+              OrganoCity Admin
+            </Link>
+          </div>
+          {isMobile && onClose && (
+            <div onClick={(e) => { e.stopPropagation(); onClose(); }} className="p-2 rounded-lg hover:bg-white/10 cursor-pointer">
+              <FiX className="h-5 w-5 cursor-pointer" />
+            </div>
+          )}
         </div>
 
         <nav className="flex-1 overflow-y-auto p-4">
@@ -121,7 +136,10 @@ function AdminSidebar({ admin, onClose }: { admin: any; onClose?: () => void }) 
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    onClick={onClose}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (onClose) onClose();
+                    }}
                     className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
                       isActive
                         ? "bg-[#C6A24A]/20 text-[#C6A24A]"
@@ -150,7 +168,10 @@ function AdminSidebar({ admin, onClose }: { admin: any; onClose?: () => void }) 
           <div className="flex flex-col gap-2">
             <Link
               href="/admin/profile"
-              onClick={onClose}
+              onClick={(e) => {
+                e.stopPropagation();
+                if (onClose) onClose();
+              }}
               className="flex items-center justify-center gap-2 rounded-lg bg-white/10 px-3 py-2 text-sm font-medium hover:bg-white/20"
             >
               <FiUser className="h-4 w-4" />
@@ -183,8 +204,9 @@ export function AdminMobileHeader({ admin }: { admin: any }) {
 
   return (
     <>
-      <header className="sticky top-0 z-30 flex h-16 items-center justify-between gap-4 border-b border-[#C6A24A]/20 bg-[#F6F1E7]/80 px-4 md:hidden backdrop-blur">
+        <header className="sticky top-0 z-30 flex h-16 items-center justify-between gap-4 border-b border-[#C6A24A]/20 bg-[#F6F1E7]/80 px-4 md:hidden backdrop-blur">
         <button
+          type="button"
           onClick={() => setIsMenuOpen(true)}
           className="flex items-center justify-center p-2"
         >
@@ -211,12 +233,13 @@ export function AdminMobileHeader({ admin }: { admin: any }) {
               onClick={() => setIsMenuOpen(false)}
             />
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 md:hidden"
+              initial={{ x: -280 }}
+              animate={{ x: 0 }}
+              exit={{ x: -280 }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="fixed left-0 top-0 z-50 h-screen w-64 bg-[#1E1F1C] text-white"
             >
-              <AdminSidebar admin={admin} onClose={() => setIsMenuOpen(false)} />
+              <AdminSidebar admin={admin} onClose={() => setIsMenuOpen(false)} isMobile={true} />
             </motion.div>
           </>
         )}
