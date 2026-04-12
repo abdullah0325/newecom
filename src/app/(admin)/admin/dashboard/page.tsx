@@ -88,51 +88,51 @@ export default async function AdminDashboardPage() {
   ];
 
   return (
-    <main className="min-h-screen bg-[#F6F1E7] px-6 py-12">
+    <main className="min-h-screen bg-[#F6F1E7] px-3 sm:px-6 py-6 sm:py-12">
       <div className="mx-auto max-w-7xl">
-        <div className="mb-8 flex items-center justify-between gap-4">
+        <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-[#1E1F1C]">
+            <h1 className="text-2xl sm:text-3xl font-bold text-[#1E1F1C]">
               Admin Dashboard
             </h1>
-            <p className="mt-2 text-sm text-[#5A5E55]">
+            <p className="mt-1 sm:mt-2 text-xs sm:text-sm text-[#5A5E55]">
               Welcome back! Here&apos;s what&apos;s happening with your store.
             </p>
           </div>
 
           <Link
             href="/admin/products/new"
-            className="rounded-full bg-[#1F6B4F] px-5 py-3 text-sm font-semibold text-[#F6F1E7] hover:bg-[#17513D]"
+            className="rounded-full bg-[#1F6B4F] px-4 sm:px-5 py-2 sm:py-3 text-xs sm:text-sm font-semibold text-[#F6F1E7] hover:bg-[#17513D]"
           >
             Add Product
           </Link>
         </div>
 
-        <div className="grid gap-5 md:grid-cols-4">
+        <div className="grid gap-3 sm:gap-5 grid-cols-2 md:grid-cols-4">
           {stats.map((item) => (
             <div
               key={item.label}
-              className="rounded-3xl border border-[#C6A24A]/20 bg-white p-6 shadow-sm"
+              className="rounded-2xl sm:rounded-3xl border border-[#C6A24A]/20 bg-white p-3 sm:p-6 shadow-sm"
             >
-              <p className="text-sm uppercase tracking-wide text-[#5A5E55]">
+              <p className="text-xs sm:text-sm uppercase tracking-wide text-[#5A5E55]">
                 {item.label}
               </p>
-              <p className="mt-3 text-4xl font-bold" style={{ color: item.color }}>
+              <p className="mt-1 sm:mt-3 text-2xl sm:text-4xl font-bold" style={{ color: item.color }}>
                 {item.value}
               </p>
             </div>
           ))}
         </div>
 
-        <div className="mt-8 grid gap-6 lg:grid-cols-2">
-          <div className="rounded-3xl border border-[#C6A24A]/20 bg-white p-6 shadow-sm">
-            <div className="mb-4 flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-[#1E1F1C]">
+        <div className="mt-6 sm:mt-8 grid gap-4 sm:gap-6 grid-cols-1 lg:grid-cols-2">
+          <div className="rounded-2xl sm:rounded-3xl border border-[#C6A24A]/20 bg-white p-4 sm:p-6 shadow-sm">
+            <div className="mb-3 sm:mb-4 flex items-center justify-between">
+              <h2 className="text-base sm:text-lg font-semibold text-[#1E1F1C]">
                 Recent Orders
               </h2>
               <Link
                 href="/admin/orders"
-                className="text-sm text-[#1F6B4F] hover:underline"
+                className="text-xs sm:text-sm text-[#1F6B4F] hover:underline"
               >
                 View all
               </Link>
@@ -196,14 +196,14 @@ export default async function AdminDashboardPage() {
             )}
           </div>
 
-          <div className="rounded-3xl border border-[#C6A24A]/20 bg-white p-6 shadow-sm">
-            <div className="mb-4 flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-[#1E1F1C]">
+          <div className="rounded-2xl sm:rounded-3xl border border-[#C6A24A]/20 bg-white p-4 sm:p-6 shadow-sm">
+            <div className="mb-3 sm:mb-4 flex items-center justify-between">
+              <h2 className="text-base sm:text-lg font-semibold text-[#1E1F1C]">
                 Recent Inquiries
               </h2>
               <Link
                 href="/admin/inquiries"
-                className="text-sm text-[#1F6B4F] hover:underline"
+                className="text-xs sm:text-sm text-[#1F6B4F] hover:underline"
               >
                 View all
               </Link>
@@ -242,16 +242,16 @@ export default async function AdminDashboardPage() {
         </div>
 
         {lowStockProducts.length > 0 && (
-          <div className="mt-6 rounded-3xl border border-red-200 bg-red-50 p-6">
-            <h2 className="mb-4 text-lg font-semibold text-red-800">
+          <div className="mt-4 sm:mt-6 rounded-2xl sm:rounded-3xl border border-red-200 bg-red-50 p-4 sm:p-6">
+            <h2 className="mb-3 sm:mb-4 text-base sm:text-lg font-semibold text-red-800">
               Low Stock Alerts
             </h2>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-2 sm:gap-3">
               {lowStockProducts.map((product) => (
                 <Link
                   key={product.id}
                   href={`/admin/products/${product.id}/edit`}
-                  className="flex items-center gap-2 rounded-full border border-red-300 bg-white px-3 py-1.5 text-sm text-red-700 hover:bg-red-100"
+                  className="flex items-center gap-2 rounded-full border border-red-300 bg-white px-2.5 sm:px-3 py-1 text-xs sm:text-sm text-red-700 hover:bg-red-100"
                 >
                   <span className="font-medium">{product.title}</span>
                   <span className="text-red-500">({product.inventory} left)</span>

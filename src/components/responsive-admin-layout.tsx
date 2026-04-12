@@ -268,7 +268,7 @@ export function ResponsiveAdminLayout({
         
         <AdminMobileHeader admin={admin} />
         
-        <main className="pb-20 md:pb-0">
+        <main className="px-3 sm:px-6 pb-20 md:pb-0">
           {children}
         </main>
       </div>

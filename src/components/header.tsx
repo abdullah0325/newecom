@@ -19,6 +19,7 @@ import {
 } from "@esmate/shadcn/components/ui/sheet";
 import { Badge } from "@esmate/shadcn/components/ui/badge";
 import { SearchDialog } from "./search-dialog";
+import { CartDrawer } from "./cart-drawer";
 import Image from "next/image";
 
 const mainMenuItems = [
@@ -65,6 +66,7 @@ export function Header() {
   const { totalQuantity } = useCart();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false);
 
   const isActive = (href: string) => pathname.startsWith(href);
 
@@ -188,10 +190,12 @@ export function Header() {
                       <Search className="h-5 w-5" />
                     </Button>
 
-                    <Link
-                      href="/cart"
+                    <button
                       className="relative text-[#1E1F1C] hover:text-[#1F6B4F] transition-colors"
-                      onClick={() => setMobileMenuOpen(false)}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        setCartOpen(true);
+                      }}
                     >
                       <ShoppingCart className="h-6 w-6" />
                       {!!totalQuantity && (
@@ -199,7 +203,7 @@ export function Header() {
                           {totalQuantity}
                         </Badge>
                       )}
-                    </Link>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -329,24 +333,24 @@ export function Header() {
             <Search className="h-5 w-5" />
           </Button>
 
-          <Link href="/cart" className="relative">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="relative h-10 w-10 text-[#1E1F1C] hover:text-[#1F6B4F]"
-            >
-              <ShoppingCart className="h-5 w-5" />
-              {!!totalQuantity && (
-                <Badge className="absolute -right-1 -top-1 h-5 min-w-5 rounded-full border-2 border-white bg-[#1F6B4F] p-0 text-xs text-[#F6F1E7]">
-                  {totalQuantity > 99 ? "99+" : totalQuantity}
-                </Badge>
-              )}
-            </Button>
-          </Link>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="relative h-10 w-10 text-[#1E1F1C] hover:text-[#1F6B4F]"
+            onClick={() => setCartOpen(true)}
+          >
+            <ShoppingCart className="h-5 w-5" />
+            {!!totalQuantity && (
+              <Badge className="absolute -right-1 -top-1 h-5 min-w-5 rounded-full border-2 border-white bg-[#1F6B4F] p-0 text-xs text-[#F6F1E7]">
+                {totalQuantity > 99 ? "99+" : totalQuantity}
+              </Badge>
+            )}
+          </Button>
         </div>
       </nav>
 
       <SearchDialog open={searchOpen} onOpenChange={setSearchOpen} />
+      <CartDrawer open={cartOpen} onOpenChange={setCartOpen} />
     </header>
   );
 }
