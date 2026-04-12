@@ -12,3 +12,7 @@ if (typeof window !== "undefined" && "serviceWorker" in navigator) {
       });
   });
 }
+
+export default function ServiceWorkerRegistration() {
+  return null;
+}
