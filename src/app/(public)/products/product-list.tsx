@@ -40,6 +40,7 @@ export function ProductList(props: Props) {
               featuredImageUrl={node.featuredImage?.url || "/logo/organocityBackup.png"}
               price={node.priceRange.minVariantPrice}
               tag={node.tags?.[0]}
+              productId={node.id}
             />
           ))}
       </div>

@@ -33,7 +33,7 @@ export function CartDrawer({ open, onOpenChange }: CartDrawerProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm"
+            className="fixed inset-0 z-50 bg-black/40"
             onClick={() => onOpenChange(false)}
           />
           <motion.div
@@ -41,7 +41,7 @@ export function CartDrawer({ open, onOpenChange }: CartDrawerProps) {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed right-0 top-0 z-50 flex h-full w-full max-w-md flex-col border-l border-[#C6A24A]/20 bg-white/95 backdrop-blur-md shadow-xl"
+            className="fixed right-0 top-0 z-50 flex h-full w-full max-w-md flex-col border-l border-[#C6A24A]/20 bg-white/95 shadow-xl"
           >
             <div className="flex items-center justify-between border-b border-[#C6A24A]/15 bg-[#F6F1E7]/80 px-5 py-4">
               <div className="flex items-center gap-2">
@@ -121,7 +121,7 @@ export function CartDrawer({ open, onOpenChange }: CartDrawerProps) {
                             <div className="flex items-center justify-between gap-2">
                               <div className="flex items-center gap-2">
                                 <button
-                                  onClick={() => line?.id && cart.removeLine(line.id)}
+                                  onClick={() => line?.id && cart.updateQuantity(line.id, line.quantity - 1)}
                                   className="h-6 w-6 rounded-full border border-[#C6A24A]/25 flex items-center justify-center text-[#5A5E55] hover:bg-[#F6F1E7] text-xs"
                                 >
                                   -
@@ -130,10 +130,7 @@ export function CartDrawer({ open, onOpenChange }: CartDrawerProps) {
                                   <CartLineQuantity />
                                 </span>
                                 <button
-                                  onClick={() =>
-                                    line?.merchandise?.id &&
-                                    cart.linesAdd([{ merchandiseId: line.merchandise.id, quantity: 1 }])
-                                  }
+                                  onClick={() => line?.id && cart.updateQuantity(line.id, line.quantity + 1)}
                                   className="h-6 w-6 rounded-full border border-[#C6A24A]/25 flex items-center justify-center text-[#5A5E55] hover:bg-[#F6F1E7] text-xs"
                                 >
                                   +
@@ -168,16 +165,16 @@ export function CartDrawer({ open, onOpenChange }: CartDrawerProps) {
                     Shipping and taxes calculated at checkout
                   </p>
 
-                  <div className="space-y-2">
+                  <div className="flex gap-2">
                     <CartCheckoutButton
-                      className="inline-flex h-11 w-full items-center justify-center rounded-full bg-[#1F6B4F] text-sm font-semibold text-[#F6F1E7] transition hover:bg-[#17513D]"
+                      className="flex-1 inline-flex h-10 items-center justify-center rounded-full bg-[#1F6B4F] text-sm font-semibold text-[#F6F1E7] transition hover:bg-[#17513D]"
                     >
                       Proceed to Checkout
                     </CartCheckoutButton>
 
                     <Button
                       variant="outline"
-                      className="h-11 w-full rounded-full border-[#C6A24A]/25 text-[#1E1F1C] hover:bg-[#F6F1E7]"
+                      className="flex-1 h-10 rounded-full border-[#C6A24A]/25 text-sm font-medium text-[#1E1F1C] hover:bg-[#F6F1E7]"
                       onClick={() => onOpenChange(false)}
                     >
                       Continue Shopping

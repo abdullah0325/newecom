@@ -50,6 +50,7 @@ export async function getProductsByCategorySlug(slug: string) {
 
   // Match the `searchProducts` return shape (ProductCardNode[])
   return products.map((p) => ({
+    id: p.id,
     handle: p.handle,
     title: p.title,
     tags: Array.isArray(p.tags) ? (p.tags as unknown[]).filter((x): x is string => typeof x === "string") : [],
@@ -126,6 +127,7 @@ export async function getProductsAdvanced(params: {
       return tags.some((t) => t.toLowerCase().includes(params.tag!.toLowerCase()));
     })
     .map((p) => ({
+      id: p.id,
       handle: p.handle,
       title: p.title,
       tags: Array.isArray(p.tags)

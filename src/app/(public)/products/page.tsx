@@ -217,6 +217,7 @@ export default async function Page({
                   featuredImageUrl={p.featuredImage?.url || "/logo/organocityBackup.png"}
                   price={p.priceRange.minVariantPrice}
                   tag={p.tags?.[0]}
+                  productId={p.id}
                 />
               ))}
             </div>

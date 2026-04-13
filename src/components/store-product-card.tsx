@@ -2,8 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { FaWhatsapp } from "react-icons/fa";
-import { Money } from "@/lib/commerce";
+import { FaWhatsapp, FaShoppingCart } from "react-icons/fa";
+import { Money, useCart } from "@/lib/commerce";
+import { toast } from "sonner";
+import { useState } from "react";
 
 type ProductCardProps = {
   handle: string;
@@ -12,6 +14,8 @@ type ProductCardProps = {
   price: { amount: string; currencyCode: string };
   compareAtPrice?: { amount: string; currencyCode: string } | null;
   tag?: string;
+  variantId?: string;
+  productId?: string;
 };
 
 export function StoreProductCard({
@@ -21,10 +25,40 @@ export function StoreProductCard({
   price,
   compareAtPrice,
   tag,
+  variantId,
+  productId,
 }: ProductCardProps) {
+  const [loading, setLoading] = useState(false);
+  const { linesAdd, registerSimpleProduct } = useCart();
+
   const whatsapp = `https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || ""}?text=${encodeURIComponent(
     `Hi, I want to order ${title}`,
   )}`;
+
+  const effectiveVariantId = variantId || productId;
+
+  const handleAddToCart = async () => {
+    if (!effectiveVariantId) {
+      return;
+    }
+    setLoading(true);
+    try {
+      await linesAdd([{ 
+        merchandiseId: effectiveVariantId, 
+        quantity: 1,
+        title,
+        price,
+        imageUrl: featuredImageUrl,
+      }]);
+      toast.success("Added to cart", {
+        description: title,
+      });
+    } catch {
+      toast.error("Failed to add to cart");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="group overflow-hidden rounded-2xl border border-[#C6A24A]/20 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
@@ -68,12 +102,24 @@ export function StoreProductCard({
             <FaWhatsapp className="h-4 w-4" />
             WhatsApp
           </a>
-          <Link
-            href={`/products/${handle}`}
-            className="inline-flex items-center justify-center rounded-lg bg-[#1F6B4F] px-3 py-2 text-xs font-semibold text-white hover:bg-[#17513D]"
-          >
-            Add to Cart
-          </Link>
+          {effectiveVariantId ? (
+            <button
+              onClick={handleAddToCart}
+              disabled={loading}
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#1F6B4F] px-3 py-2 text-xs font-semibold text-white hover:bg-[#17513D] disabled:opacity-50"
+            >
+              <FaShoppingCart className="h-4 w-4" />
+              {loading ? "Adding..." : "Add to Cart"}
+            </button>
+          ) : (
+            <Link
+              href={`/products/${handle}`}
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#1F6B4F] px-3 py-2 text-xs font-semibold text-white hover:bg-[#17513D]"
+            >
+              <FaShoppingCart className="h-4 w-4" />
+              Add to Cart
+            </Link>
+          )}
         </div>
       </div>
     </div>

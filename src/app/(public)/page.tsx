@@ -49,6 +49,7 @@ export default async function Page() {
       orderBy: { updatedAt: "desc" },
       take: 8,
       select: {
+        id: true,
         handle: true,
         title: true,
         price: true,
@@ -120,6 +121,7 @@ export default async function Page() {
                     : null
                 }
                 tag={firstTag}
+                productId={product.id}
               />
             );
           })}

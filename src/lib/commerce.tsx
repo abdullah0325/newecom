@@ -75,11 +75,16 @@ type CartContextValue = {
     lines: Array<{
       merchandiseId: string;
       quantity: number;
+      title?: string;
+      price?: { amount: string; currencyCode: string };
+      imageUrl?: string;
     }>,
   ) => Promise<void>;
   removeLine: (lineId: string) => void;
+  updateQuantity: (lineId: string, quantity: number) => void;
   clear: () => void;
   registerProduct: (product: ProductData) => void;
+  registerSimpleProduct: (product: SimpleProductData) => void;
 };
 
 type CartLineContextValue = {
@@ -121,9 +126,17 @@ export function Money({
   return <span className={className}>{formatAmount(Number(data.amount), data.currencyCode)}</span>;
 }
 
+type SimpleProductData = {
+  handle: string;
+  title: string;
+  price: { amount: string; currencyCode: string };
+  image?: { url: string; altText: string | null } | null;
+};
+
 export function CartProvider({ children }: { children: ReactNode }) {
   const [lines, setLines] = useState<CartLine[]>([]);
   const [productRegistry, setProductRegistry] = useState<Record<string, ProductData>>({});
+  const [simpleProductRegistry, setSimpleProductRegistry] = useState<Record<string, SimpleProductData>>({});
 
   useEffect(() => {
     if (typeof window === "undefined") {
@@ -160,6 +173,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }));
   }, []);
 
+  const registerSimpleProduct = useCallback((product: SimpleProductData) => {
+    setSimpleProductRegistry((current) => ({
+      ...current,
+      [product.handle]: product,
+    }));
+  }, []);
+
   const linesAdd: CartContextValue["linesAdd"] = async (incomingLines) => {
     setLines((current) => {
       const nextLines = [...current];
@@ -175,19 +195,43 @@ export function CartProvider({ children }: { children: ReactNode }) {
           (candidate) => candidate.id === incomingLine.merchandiseId,
         );
 
-        if (!product || !variant) {
+        const simpleProduct = Object.values(simpleProductRegistry).find(
+          (sp) => sp.handle === incomingLine.merchandiseId,
+        );
+
+        if (!product && !variant && !simpleProduct && !incomingLine.title) {
           toast.error("This product is not ready for cart storage yet.");
           continue;
         }
 
-        const currentImageId = variant.image?.id;
-        const image =
-          product.images.nodes.find((candidate) => candidate.id === currentImageId) ??
-          product.images.nodes[0] ??
-          null;
+        let image = null;
+        let price = { amount: "0", currencyCode: "PKR" };
+        let title = "";
+
+        if (incomingLine.title) {
+          title = incomingLine.title;
+          price = incomingLine.price || { amount: "0", currencyCode: "PKR" };
+          if (incomingLine.imageUrl) {
+            image = { url: incomingLine.imageUrl, altText: title };
+          }
+        } else if (product && variant) {
+          const currentImageId = variant.image?.id;
+          image =
+            product.images.nodes.find((candidate) => candidate.id === currentImageId) ??
+            product.images.nodes[0] ??
+            null;
+          price = variant.price;
+          title = product.title;
+        } else if (simpleProduct) {
+          image = simpleProduct.image || null;
+          price = simpleProduct.price;
+          title = simpleProduct.title;
+        }
+
+        const effectiveId = product && variant ? incomingLine.merchandiseId : `${incomingLine.merchandiseId}-simple`;
 
         const existingLine = nextLines.find(
-          (line) => line.merchandise.id === incomingLine.merchandiseId,
+          (line) => line.merchandise.id === effectiveId,
         );
 
         if (existingLine) {
@@ -200,25 +244,25 @@ export function CartProvider({ children }: { children: ReactNode }) {
         }
 
         nextLines.push({
-          id: `${incomingLine.merchandiseId}`,
+          id: effectiveId,
           quantity: incomingLine.quantity,
           cost: {
-            totalAmount: calculateLineTotal(variant.price, incomingLine.quantity),
+            totalAmount: calculateLineTotal(price, incomingLine.quantity),
           },
           merchandise: {
-            id: incomingLine.merchandiseId,
+            id: effectiveId,
             image: image
               ? {
                   url: image.url,
                   altText: image.altText,
                 }
               : null,
-            selectedOptions: variant.selectedOptions,
+            selectedOptions: [],
             product: {
-              handle: product.handle,
-              title: product.title,
+              handle: product?.handle || simpleProduct?.handle || incomingLine.merchandiseId,
+              title: title,
             },
-            price: variant.price,
+            price: price,
           },
         });
       }
@@ -231,6 +275,35 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setLines((current) => current.filter((line) => line.id !== lineId));
   };
 
+  const updateQuantity = (lineId: string, quantity: number) => {
+    if (quantity <= 0) {
+      setLines((current) => current.filter((line) => line.id !== lineId));
+      return;
+    }
+    setLines((current) =>
+      current.map((line) => {
+        if (line.id === lineId) {
+          const newQuantity = quantity;
+          const pricePerUnit = {
+            amount: (Number(line.cost.totalAmount.amount) / line.quantity).toFixed(2),
+            currencyCode: line.cost.totalAmount.currencyCode,
+          };
+          return {
+            ...line,
+            quantity: newQuantity,
+            cost: {
+              totalAmount: {
+                amount: (Number(pricePerUnit.amount) * newQuantity).toFixed(2),
+                currencyCode: pricePerUnit.currencyCode,
+              },
+            },
+          };
+        }
+        return line;
+      }),
+    );
+  };
+
   const clear = () => {
     setLines([]);
   };
@@ -241,10 +314,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
       totalQuantity: lines.reduce((sum, line) => sum + line.quantity, 0),
       linesAdd,
       removeLine,
+      updateQuantity,
       clear,
       registerProduct,
+      registerSimpleProduct,
     }),
-    [lines, productRegistry],
+    [lines, productRegistry, simpleProductRegistry],
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

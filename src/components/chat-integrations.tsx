@@ -39,10 +39,10 @@ export function ChatIntegrations() {
         href={`https://wa.me/${WHATSAPP_NUMBER}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-transform hover:scale-110 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-[#25D366] focus:ring-offset-2"
+        className="fixed bottom-28 md:bottom-28 right-5 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-[#25D366] focus:ring-offset-2 lg:bottom-6 lg:right-6 lg:h-14 lg:w-14"
         aria-label="Chat on WhatsApp"
       >
-        <FaWhatsapp className="h-8 w-8" />
+        <FaWhatsapp className="h-5 w-5 lg:h-8 lg:w-8" />
       </Link>
 
       {/* Load Tawk.to only after scroll */}

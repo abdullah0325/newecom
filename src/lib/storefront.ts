@@ -20,6 +20,7 @@ type StorefrontImage = {
 };
 
 type ProductCardNode = {
+  id: string;
   handle: string;
   title: string;
   tags?: string[];
@@ -142,6 +143,7 @@ function buildProductCardNode(product: {
   );
 
   return {
+    id: product.id,
     handle: product.handle,
     title: product.title,
     tags: parseStringArray(product.tags),

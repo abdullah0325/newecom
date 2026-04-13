@@ -4,6 +4,7 @@ import { Footer } from "@/components/footer";
 import { AnnouncementBar } from "@/components/announcement-bar";
 import { ChatIntegrations } from "@/components/chat-integrations";
 import { SiteLoader } from "@/components/SiteLoader";
+import { MobileBottomNav } from "@/components/mobile-bottom-nav";
 
 export default function PublicLayout({ children }: { children: ReactNode }) {
   return (
@@ -11,8 +12,9 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
       <AnnouncementBar />
       <Header />
       <SiteLoader />
-      <main className="flex-grow">{children}</main>
+      <main className="flex-grow pb-12 lg:pb-0">{children}</main>
       <Footer />
+      <MobileBottomNav />
       <ChatIntegrations />
     </div>
   );

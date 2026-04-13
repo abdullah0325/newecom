@@ -43,7 +43,7 @@ export default async function CategoryPage({
       where: { status: "ACTIVE", OR: [{ categoryId: category.id }, { subcategoryId: category.id }] },
       orderBy: { updatedAt: "desc" },
       take: 48,
-      select: { handle: true, title: true, price: true, compareAtPrice: true, featuredImage: true, images: true, tags: true },
+      select: { id: true, handle: true, title: true, price: true, compareAtPrice: true, featuredImage: true, images: true, tags: true },
     }),
   ]);
 
@@ -96,6 +96,7 @@ export default async function CategoryPage({
                   price={{ amount: Number(product.price || 0).toFixed(2), currencyCode: "PKR" }}
                   compareAtPrice={product.compareAtPrice ? { amount: Number(product.compareAtPrice).toFixed(2), currencyCode: "PKR" } : null}
                   tag={firstTag}
+                  productId={product.id}
                 />
               );
             })}
