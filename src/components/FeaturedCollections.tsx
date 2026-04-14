@@ -179,7 +179,7 @@ export default function FeaturedCollections() {
                   className="group flex h-full flex-col overflow-hidden rounded-[24px] border border-black/5 bg-white shadow-[0_10px_30px_rgba(0,0,0,0.05)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(0,0,0,0.10)]"
                 >
                   {/* Image */}
-                  <div className="relative h-64 overflow-hidden bg-[linear-gradient(180deg,#F8F3EC_0%,#F2ECE2_100%)]">
+                  <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden bg-[linear-gradient(180deg,#F8F3EC_0%,#F2ECE2_100%)]">
                     <Image
                       src={item.image}
                       alt={item.title}
@@ -200,13 +200,13 @@ export default function FeaturedCollections() {
                   </div>
 
                   {/* Content */}
-                  <div className="flex flex-1 flex-col p-4">
+                  <div className="flex flex-1 flex-col p-3 sm:p-4">
                     <div className="flex items-start justify-between gap-3">
                       <div className="min-w-0">
-                        <h3 className="text-lg font-semibold tracking-tight text-[#1E1F1C]">
+                        <h3 className="text-base sm:text-lg font-semibold tracking-tight text-[#1E1F1C]">
                           {item.title}
                         </h3>
-                        <p className="mt-1 min-h-[44px] text-sm leading-6 text-[#5A5E55]">
+                        <p className="mt-0.5 min-h-[36px] text-xs sm:text-sm leading-5 text-[#5A5E55]">
                           {item.subtitle}
                         </p>
                       </div>

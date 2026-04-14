@@ -70,7 +70,7 @@ const Hero = () => {
       >
         {slides.map((slide) => (
   <SwiperSlide key={slide.id}>
-  <div className="relative flex min-h-[560px] sm:min-h-[650px] lg:min-h-[700px] items-center">
+  <div className="relative flex min-h-[85vh] sm:min-h-[400px] md:min-h-[450px] lg:min-h-[500px] items-center justify-center">
 
     {/* Background Image */}
     <Image
@@ -78,44 +78,44 @@ const Hero = () => {
       alt={slide.alt}
       fill
       priority={slide.id === 1}
-      className="object-cover object-center sm:object-cover lg:object-cover"
+      className="object-cover object-center"
       sizes="100vw"
     />
 
    
-    <div className="absolute inset-0 bg-gradient-to-r from-[#000000b3] via-[#00000066] to-transparent" />
+    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent sm:bg-gradient-to-r sm:from-black/80 sm:via-black/50 sm:to-transparent" />
 
     {/* Content */}
     <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
-      <div className="max-w-full sm:max-w-xl text-white">
+      <div className="max-w-full sm:max-w-lg md:max-w-xl text-white text-center sm:text-left">
 
-        <span className="uppercase tracking-[0.25em] text-xs sm:text-sm text-[#E6D7C3] font-medium">
+        <span className="uppercase tracking-[0.2em] text-[10px] sm:text-xs text-[#E6D7C3] font-medium">
           {slide.eyebrow}
         </span>
 
-        <h1 className="mt-4 sm:mt-5 text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-serif leading-tight">
+        <h1 className="mt-2 sm:mt-3 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif leading-tight">
           {slide.title}
         </h1>
 
-        <p className="mt-3 sm:mt-4 text-base sm:text-lg md:text-xl text-[#EADFD0] font-medium">
+        <p className="mt-2 sm:mt-3 text-sm sm:text-base text-[#EADFD0] font-medium">
           {slide.subtitle}
         </p>
 
-        <p className="mt-4 sm:mt-6 text-sm sm:text-base md:text-lg text-[#F5EFE6] leading-relaxed">
+        <p className="mt-2 sm:mt-4 text-xs sm:text-sm md:text-base text-[#F5EFE6] leading-relaxed line-clamp-2 sm:line-clamp-3">
           {slide.description}
         </p>
 
-        <div className="mt-6 sm:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4">
+        <div className="mt-4 sm:mt-6 flex flex-row sm:flex-row gap-2 sm:gap-3 justify-center">
           <Link
             href="/products"
-            className="bg-[#1F6B4F] hover:bg-[#17513D] text-white px-6 py-3 sm:px-8 sm:py-4 rounded-full text-xs sm:text-sm uppercase tracking-[0.2em] sm:tracking-widest transition text-center"
+            className="bg-[#1F6B4F] hover:bg-[#17513D] text-white px-5 py-2.5 sm:px-6 sm:py-3 rounded-full text-xs uppercase tracking-[0.15em] transition text-center"
           >
             Shop Now
           </Link>
 
           <Link
             href="/about-us"
-            className="border border-white text-white px-6 py-3 sm:px-8 sm:py-4 rounded-full text-xs sm:text-sm uppercase tracking-[0.2em] sm:tracking-widest hover:bg-white hover:text-black transition text-center"
+            className="border border-white text-white px-5 py-2.5 sm:px-6 sm:py-3 rounded-full text-xs uppercase tracking-[0.15em] hover:bg-white hover:text-black transition text-center"
           >
             Learn More
           </Link>
