@@ -9,7 +9,7 @@ import { BsChatDots } from "react-icons/bs";
 const PHONE_NUMBER = "923234567890";
 
 const btnBase =
-  "flex items-center justify-center w-[38px] h-[38px] rounded-[11px] flex-shrink-0 transition-all duration-200 active:scale-95";
+  "flex items-center justify-center w-[46px] h-[46px] rounded-[13px] flex-shrink-0 transition-all duration-200 active:scale-95";
 
 export function MobileBottomNav() {
   const pathname = usePathname();
@@ -25,9 +25,9 @@ export function MobileBottomNav() {
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 lg:hidden">
-      <div className="mx-1 mb-2">
+      <div className="mx-2 mb-3">
         <div
-          className="flex items-center justify-between h-[50px] px-2 rounded-[14px]
+          className="flex items-center justify-between h-[64px] px-3 rounded-[16px]
             bg-[#f7f3ef]/88 dark:bg-[#1a1410]/70
             backdrop-blur-2xl
             border border-[#C8856A]/25 dark:border-[#C8856A]/15
@@ -41,7 +41,7 @@ export function MobileBottomNav() {
             aria-label="Open AI chat"
             className={`${btnBase} bg-[#1F6B4F]/10 dark:bg-[#1F6B4F]/22`}
           >
-            <BsChatDots size={21} className="text-[#1F6B4F] dark:text-[#6ecfaa]" />
+            <BsChatDots size={24} className="text-[#1F6B4F] dark:text-[#6ecfaa]" />
           </button>
 
           {/* Home */}
@@ -54,7 +54,7 @@ export function MobileBottomNav() {
             }`}
           >
             <Home
-              size={21}
+              size={24}
               strokeWidth={homeActive ? 2.2 : 1.8}
               className="text-[#155c40] dark:text-[#7ddcb8]"
             />
@@ -70,7 +70,7 @@ export function MobileBottomNav() {
             }`}
           >
             <Grid3X3
-              size={21}
+              size={24}
               strokeWidth={productsActive ? 2.1 : 1.8}
               className="text-[#1F6B4F] dark:text-[#6ecfaa]"
             />
@@ -83,7 +83,7 @@ export function MobileBottomNav() {
             className={`${btnBase} bg-[#C8856A]/14 dark:bg-[#C8856A]/20`}
           >
             <Phone
-              size={21}
+              size={24}
               strokeWidth={1.9}
               className="text-[#C8856A] dark:text-[#E8A882]"
             />
@@ -98,7 +98,7 @@ export function MobileBottomNav() {
             className={`${btnBase} bg-[#25D366]/13 dark:bg-[#25D366]/18`}
           >
             <FaWhatsapp
-              size={21}
+              size={24}
               className="text-[#19a84e] dark:text-[#25D366]"
             />
           </a>
