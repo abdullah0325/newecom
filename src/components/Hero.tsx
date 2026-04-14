@@ -89,33 +89,33 @@ const Hero = () => {
     <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
       <div className="max-w-full sm:max-w-lg md:max-w-xl text-white text-center sm:text-left">
 
-        <span className="uppercase tracking-[0.2em] text-[10px] sm:text-xs text-[#E6D7C3] font-medium">
+        <span className="uppercase tracking-[0.15em] text-[11px] sm:text-xs text-[#E6D7C3] font-medium">
           {slide.eyebrow}
         </span>
 
-        <h1 className="mt-2 sm:mt-3 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif leading-tight">
+        <h1 className="mt-3 sm:mt-3 text-3xl sm:text-3xl md:text-4xl lg:text-5xl font-serif leading-tight">
           {slide.title}
         </h1>
 
-        <p className="mt-2 sm:mt-3 text-sm sm:text-base text-[#EADFD0] font-medium">
+        <p className="mt-2 sm:mt-3 text-base sm:text-base text-[#EADFD0] font-medium">
           {slide.subtitle}
         </p>
 
-        <p className="mt-2 sm:mt-4 text-xs sm:text-sm md:text-base text-[#F5EFE6] leading-relaxed line-clamp-2 sm:line-clamp-3">
+        <p className="mt-3 sm:mt-4 text-sm sm:text-sm md:text-base text-[#F5EFE6] leading-relaxed line-clamp-2 sm:line-clamp-3">
           {slide.description}
         </p>
 
-        <div className="mt-4 sm:mt-6 flex flex-row sm:flex-row gap-2 sm:gap-3 justify-center">
+        <div className="mt-6 sm:mt-6 flex flex-row sm:flex-row gap-2 sm:gap-3 justify-center">
           <Link
             href="/products"
-            className="bg-[#1F6B4F] hover:bg-[#17513D] text-white px-5 py-2.5 sm:px-6 sm:py-3 rounded-full text-xs uppercase tracking-[0.15em] transition text-center"
+            className="bg-[#1F6B4F] hover:bg-[#17513D] text-white px-4 py-2 sm:px-6 sm:py-3 rounded-full text-[11px] uppercase tracking-[0.15em] transition text-center"
           >
             Shop Now
           </Link>
 
           <Link
             href="/about-us"
-            className="border border-white text-white px-5 py-2.5 sm:px-6 sm:py-3 rounded-full text-xs uppercase tracking-[0.15em] hover:bg-white hover:text-black transition text-center"
+            className="border border-white text-white px-4 py-2 sm:px-6 sm:py-3 rounded-full text-[11px] uppercase tracking-[0.15em] hover:bg-white hover:text-black transition text-center"
           >
             Learn More
           </Link>
