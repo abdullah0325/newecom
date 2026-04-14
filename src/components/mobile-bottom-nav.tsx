@@ -41,7 +41,7 @@ export function MobileBottomNav() {
             aria-label="Open AI chat"
             className={`${btnBase} bg-[#1F6B4F]/10 dark:bg-[#1F6B4F]/22`}
           >
-            <BsChatDots size={19} className="text-[#1F6B4F] dark:text-[#6ecfaa]" />
+            <BsChatDots size={21} className="text-[#1F6B4F] dark:text-[#6ecfaa]" />
           </button>
 
           {/* Home */}
@@ -54,7 +54,7 @@ export function MobileBottomNav() {
             }`}
           >
             <Home
-              size={19}
+              size={21}
               strokeWidth={homeActive ? 2.2 : 1.8}
               className="text-[#155c40] dark:text-[#7ddcb8]"
             />
@@ -70,7 +70,7 @@ export function MobileBottomNav() {
             }`}
           >
             <Grid3X3
-              size={19}
+              size={21}
               strokeWidth={productsActive ? 2.1 : 1.8}
               className="text-[#1F6B4F] dark:text-[#6ecfaa]"
             />
@@ -83,7 +83,7 @@ export function MobileBottomNav() {
             className={`${btnBase} bg-[#C8856A]/14 dark:bg-[#C8856A]/20`}
           >
             <Phone
-              size={19}
+              size={21}
               strokeWidth={1.9}
               className="text-[#C8856A] dark:text-[#E8A882]"
             />
@@ -98,7 +98,7 @@ export function MobileBottomNav() {
             className={`${btnBase} bg-[#25D366]/13 dark:bg-[#25D366]/18`}
           >
             <FaWhatsapp
-              size={19}
+              size={21}
               className="text-[#19a84e] dark:text-[#25D366]"
             />
           </a>
