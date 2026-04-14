@@ -27,7 +27,7 @@ export function MobileBottomNav() {
     <nav className="fixed bottom-0 left-0 right-0 z-50 lg:hidden">
       <div className="mx-1 mb-2">
         <div
-          className="flex items-center justify-evenly gap-1 h-[50px] px-2 rounded-[14px]
+          className="flex items-center justify-between h-[50px] px-2 rounded-[14px]
             bg-[#f7f3ef]/88 dark:bg-[#1a1410]/70
             backdrop-blur-2xl
             border border-[#C8856A]/25 dark:border-[#C8856A]/15
@@ -41,7 +41,7 @@ export function MobileBottomNav() {
             aria-label="Open AI chat"
             className={`${btnBase} bg-[#1F6B4F]/10 dark:bg-[#1F6B4F]/22`}
           >
-            <BsChatDots size={17} className="text-[#1F6B4F] dark:text-[#6ecfaa]" />
+            <BsChatDots size={19} className="text-[#1F6B4F] dark:text-[#6ecfaa]" />
           </button>
 
           {/* Home */}
@@ -54,7 +54,7 @@ export function MobileBottomNav() {
             }`}
           >
             <Home
-              size={17}
+              size={19}
               strokeWidth={homeActive ? 2.2 : 1.8}
               className="text-[#155c40] dark:text-[#7ddcb8]"
             />
@@ -70,7 +70,7 @@ export function MobileBottomNav() {
             }`}
           >
             <Grid3X3
-              size={17}
+              size={19}
               strokeWidth={productsActive ? 2.1 : 1.8}
               className="text-[#1F6B4F] dark:text-[#6ecfaa]"
             />
@@ -83,7 +83,7 @@ export function MobileBottomNav() {
             className={`${btnBase} bg-[#C8856A]/14 dark:bg-[#C8856A]/20`}
           >
             <Phone
-              size={17}
+              size={19}
               strokeWidth={1.9}
               className="text-[#C8856A] dark:text-[#E8A882]"
             />
@@ -98,7 +98,7 @@ export function MobileBottomNav() {
             className={`${btnBase} bg-[#25D366]/13 dark:bg-[#25D366]/18`}
           >
             <FaWhatsapp
-              size={17}
+              size={19}
               className="text-[#19a84e] dark:text-[#25D366]"
             />
           </a>
