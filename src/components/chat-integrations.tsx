@@ -24,8 +24,12 @@ export function ChatIntegrations() {
 
     window.addEventListener("scroll", onScroll, { passive: true });
 
+    const handleOpenMobileChat = () => setOpenChat(true);
+    window.addEventListener("open-mobile-chat", handleOpenMobileChat);
+
     return () => {
       window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("open-mobile-chat", handleOpenMobileChat);
     };
   }, []);
 
@@ -34,12 +38,12 @@ export function ChatIntegrations() {
       <ChatButton open={openChat} onClick={() => setOpenChat((prev) => !prev)} />
       <ChatPopup open={openChat} onClose={() => setOpenChat(false)} />
 
-      {/* WhatsApp Floating Button */}
+      {/* WhatsApp Floating Button - Only on Desktop */}
       <Link
         href={`https://wa.me/${WHATSAPP_NUMBER}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-28 md:bottom-28 right-5 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-[#25D366] focus:ring-offset-2 lg:bottom-6 lg:right-6 lg:h-14 lg:w-14"
+        className="fixed bottom-28 md:bottom-28 right-5 z-50 hidden lg:flex h-12 w-12 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-[#25D366] focus:ring-offset-2 lg:bottom-6 lg:right-6 lg:h-14 lg:w-14"
         aria-label="Chat on WhatsApp"
       >
         <FaWhatsapp className="h-5 w-5 lg:h-8 lg:w-8" />

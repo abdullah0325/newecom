@@ -2,109 +2,107 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useCart } from "@/lib/commerce";
-import {
-  Home,
-  Grid3X3,
-  ShoppingCart,
-  MessageCircle,
-  Send,
-} from "@esmate/shadcn/pkgs/lucide-react";
-import { Badge } from "@esmate/shadcn/components/ui/badge";
+import { Home, Grid3X3, Phone } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
+import { BsChatDots } from "react-icons/bs";
 
-const bottomNavItems = [
-  {
-    href: "/",
-    icon: Home,
-    label: "Home",
-  },
-  {
-    href: "/collections",
-    icon: Grid3X3,
-    label: "Shop",
-  },
-  {
-    href: "/cart",
-    icon: ShoppingCart,
-    label: "Cart",
-    showBadge: true,
-  },
-  {
-    href: "/contact",
-    icon: MessageCircle,
-    label: "Contact",
-  },
-  {
-    href: "https://wa.me/923234567890",
-    icon: Send,
-    label: "Chat",
-    external: true,
-  },
-];
+const PHONE_NUMBER = "923234567890";
+
+const btnBase =
+  "flex items-center justify-center w-[38px] h-[38px] rounded-[11px] flex-shrink-0 transition-all duration-200 active:scale-95";
 
 export function MobileBottomNav() {
   const pathname = usePathname();
-  const { totalQuantity } = useCart();
 
-  const isActive = (href: string) => {
-    if (href === "/") return pathname === "/";
-    return pathname.startsWith(href);
-  };
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
+
+  const openChat = () =>
+    window.dispatchEvent(new CustomEvent("open-mobile-chat"));
+
+  const homeActive = isActive("/");
+  const productsActive = isActive("/collections");
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 lg:hidden">
-      <div className="bg-white border-t border-gray-100 shadow-[0_-2px_10px_rgba(0,0,0,0.04)]">
-        <div className="flex items-center justify-around h-12 px-1">
-          {bottomNavItems.map((item) => {
-            const Icon = item.icon;
-            const active = isActive(item.href);
-            const content = (
-              <div
-                key={item.href}
-                className={`flex flex-col items-center justify-center min-w-[56px] py-1 transition-all ${
-                  active ? "text-[#1F6B4F]" : "text-gray-400"
-                }`}
-              >
-                <div className="relative">
-                  <Icon
-                    className={`h-[18px] w-[18px] transition-colors`}
-                  />
-                  {item.showBadge && !!totalQuantity && (
-                    <Badge className="absolute -right-2 -top-1.5 h-3.5 min-w-3.5 rounded-full p-0 text-[8px] font-bold bg-[#EF4444] text-white">
-                      {totalQuantity > 99 ? "9+" : totalQuantity}
-                    </Badge>
-                  )}
-                </div>
-                <span
-                  className={`text-[9px] font-medium mt-0.5 ${
-                    active ? "text-[#1F6B4F] font-semibold" : "text-gray-400"
-                  }`}
-                >
-                  {item.label}
-                </span>
-              </div>
-            );
+      <div className="mx-1 mb-2">
+        <div
+          className="flex items-center justify-between h-[50px] px-2 rounded-[14px]
+            bg-[#f7f3ef]/88 dark:bg-[#1a1410]/70
+            backdrop-blur-2xl
+            border border-[#C8856A]/25 dark:border-[#C8856A]/15
+            shadow-[0_2px_12px_rgba(31,107,79,0.08),inset_0_1px_0_rgba(255,255,255,0.8)]
+            dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
+        >
 
-            if (item.external) {
-              return (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center"
-                >
-                  {content}
-                </a>
-              );
-            }
+          {/* AI Chat */}
+          <button
+            onClick={openChat}
+            aria-label="Open AI chat"
+            className={`${btnBase} bg-[#1F6B4F]/10 dark:bg-[#1F6B4F]/22`}
+          >
+            <BsChatDots size={17} className="text-[#1F6B4F] dark:text-[#6ecfaa]" />
+          </button>
 
-            return (
-              <Link key={item.href} href={item.href} className="flex-1">
-                {content}
-              </Link>
-            );
-          })}
+          {/* Home */}
+          <Link
+            href="/"
+            className={`${btnBase} ${
+              homeActive
+                ? "bg-[#1F6B4F]/18 dark:bg-[#2e9e72]/28"
+                : "bg-[#1F6B4F]/10 dark:bg-[#1F6B4F]/20"
+            }`}
+          >
+            <Home
+              size={17}
+              strokeWidth={homeActive ? 2.2 : 1.8}
+              className="text-[#155c40] dark:text-[#7ddcb8]"
+            />
+          </Link>
+
+          {/* Products */}
+          <Link
+            href="/collections"
+            className={`${btnBase} ${
+              productsActive
+                ? "bg-[#1F6B4F]/16 dark:bg-[#2e9e72]/24"
+                : "bg-[#1F6B4F]/10 dark:bg-[#1F6B4F]/18"
+            }`}
+          >
+            <Grid3X3
+              size={17}
+              strokeWidth={productsActive ? 2.1 : 1.8}
+              className="text-[#1F6B4F] dark:text-[#6ecfaa]"
+            />
+          </Link>
+
+          {/* Phone */}
+          <a
+            href={`tel:+${PHONE_NUMBER}`}
+            aria-label="Call us"
+            className={`${btnBase} bg-[#C8856A]/14 dark:bg-[#C8856A]/20`}
+          >
+            <Phone
+              size={17}
+              strokeWidth={1.9}
+              className="text-[#C8856A] dark:text-[#E8A882]"
+            />
+          </a>
+
+          {/* WhatsApp */}
+          <a
+            href={`https://wa.me/${PHONE_NUMBER}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="WhatsApp"
+            className={`${btnBase} bg-[#25D366]/13 dark:bg-[#25D366]/18`}
+          >
+            <FaWhatsapp
+              size={17}
+              className="text-[#19a84e] dark:text-[#25D366]"
+            />
+          </a>
+
         </div>
       </div>
     </nav>
