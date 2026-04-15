@@ -1,6 +1,8 @@
 "use client";
 
 import DOMPurify from "isomorphic-dompurify";
+import { useCart } from "@/lib/commerce";
+import { toast } from "sonner";
 
 export function MessageBubble({
   role,
@@ -13,12 +15,43 @@ export function MessageBubble({
 }) {
   const user = role === "user";
   const safeHtml = html ? DOMPurify.sanitize(html) : "";
+  const { linesAdd } = useCart();
+
+  const handleClick = async (e: React.MouseEvent) => {
+    const target = e.target as HTMLElement;
+    if (target.tagName === "BUTTON" && target.getAttribute("data-add-to-cart")) {
+      e.preventDefault();
+      const variantId = target.getAttribute("data-variant-id") || "";
+      const title = target.getAttribute("data-title") || "";
+      const priceAmount = target.getAttribute("data-price") || "0";
+      const imageUrl = target.getAttribute("data-image") || "";
+
+      if (!variantId) return;
+
+      try {
+        await linesAdd([
+          {
+            merchandiseId: variantId,
+            quantity: 1,
+            title,
+            price: { amount: priceAmount, currencyCode: "PKR" },
+            imageUrl,
+          },
+        ]);
+        toast.success("Added to cart", { description: title });
+      } catch {
+        toast.error("Failed to add to cart");
+      }
+    }
+  };
+
   return (
     <div className={`flex ${user ? "justify-end" : "justify-start"}`}>
       <div
         className={`max-w-[85%] rounded-2xl px-3 py-2 text-sm ${
           user ? "bg-[#1F6B4F] text-white" : "bg-white text-[#1E1F1C] border border-[#C6A24A]/20"
         }`}
+        onClick={handleClick}
       >
         {html && !user ? (
           <div
