@@ -101,7 +101,8 @@ function formatAmount(amount: number, currencyCode: string) {
   return new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: currencyCode,
-    minimumFractionDigits: 2,
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
   }).format(amount);
 }
 

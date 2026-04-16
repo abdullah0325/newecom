@@ -5,7 +5,7 @@ import { useState } from "react";
 import { getProductList } from "./service";
 import { useRequest } from "@esmate/react/ahooks";
 import { titleize } from "@esmate/utils/string";
-import { StoreProductCard } from "@/components/store-product-card";
+import { StoreProductCard } from "@/components/store-product-card-wrapper";
 
 interface Props {
   data: Awaited<ReturnType<typeof getProductList>>;

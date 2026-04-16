@@ -9,8 +9,8 @@ import Testimonials from "@/components/Testimonials";
 import Hero from "@/components/Hero";
 import { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
-import { StoreProductCard } from "@/components/store-product-card";
 import Image from "next/image";
+import { StoreProductCard } from "@/components/store-product-card-wrapper";
 
 export const metadata: Metadata = {
   title: "OrganoCity | Natural Products, Herbal Care, Shilajit & Pink Salt",
@@ -77,22 +77,22 @@ export default async function Page() {
             Shop Now
           </Link>
         </div>
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+        <div className="flex flex-wrap justify-center gap-4">
           {categories.map((category) => (
             <Link
               key={category.id}
               href={`/category/${category.slug}`}
-              className="group overflow-hidden rounded-2xl border border-[#C6A24A]/20 bg-white"
+              className="group flex flex-col items-center"
             >
-              <div className="relative aspect-square">
+              <div className="relative h-24 w-24 overflow-hidden rounded-full border-2 border-[#C6A24A]/30 shadow-sm transition hover:border-[#C6A24A] hover:shadow-md sm:h-28 sm:w-28">
                 <Image
                   src={category.image || "/logo/organocityBackup.png"}
                   alt={category.name}
                   fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="object-cover transition-transform duration-300 group-hover:scale-110"
                 />
               </div>
-              <div className="p-3 text-center text-sm font-semibold text-[#1E1F1C]">{category.name}</div>
+              <span className="mt-2 text-center text-xs font-semibold text-[#1E1F1C]">{category.name}</span>
             </Link>
           ))}
         </div>

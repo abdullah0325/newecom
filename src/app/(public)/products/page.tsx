@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { ProductList } from "./product-list";
 import { getCategoriesForFilters, getProductList, getProductsAdvanced } from "./service";
 import Link from "next/link";
-import { StoreProductCard } from "@/components/store-product-card";
+import { StoreProductCard } from "@/components/store-product-card-wrapper";
 
 export const revalidate = 60;
 

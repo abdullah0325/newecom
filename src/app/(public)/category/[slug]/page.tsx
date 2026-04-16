@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { prisma } from "@/lib/prisma";
-import { StoreProductCard } from "@/components/store-product-card";
+import { StoreProductCard } from "@/components/store-product-card-wrapper";
 
 export const revalidate = 60;
 
