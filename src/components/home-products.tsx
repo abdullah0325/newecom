@@ -68,7 +68,7 @@ export function HomeProducts({ categories, products, collections }: Props) {
               <button
                 key={`${category.id}-${idx}`}
                 onClick={() => setSelectedCategory(selectedCategory === category.slug ? "" : category.slug)}
-                className={`group flex flex-col items-center flex-shrink-0 ${selectedCategory === category.slug ? 'ring-2 ring-[#1F6B4F] rounded-full' : ''}`}
+                className="group flex flex-col items-center flex-shrink-0"
               >
                 <div className="relative h-16 w-16 sm:h-20 sm:w-20 lg:h-24 lg:w-24 overflow-hidden rounded-full border-2 border-[#C6A24A]/30 shadow-sm transition hover:border-[#C6A24A] hover:shadow-md">
                   <Image
