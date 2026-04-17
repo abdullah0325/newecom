@@ -44,23 +44,23 @@ export default function InquiriesPage() {
   };
 
   return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold text-[#1E1F1C] mb-6">Inquiries</h1>
+    <div className="p-4 md:p-8">
+      <h1 className="text-xl md:text-2xl font-bold text-[#1E1F1C] mb-4 md:mb-6">Inquiries</h1>
 
       {loading ? (
-        <p>Loading...</p>
+        <p className="text-gray-500 text-sm">Loading...</p>
       ) : inquiries.length === 0 ? (
-        <p className="text-gray-500">No inquiries yet</p>
+        <p className="text-gray-500 text-sm">No inquiries yet</p>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-3 md:space-y-4">
           {inquiries.map((inquiry) => (
-            <div key={inquiry.id} className="bg-white rounded-lg shadow p-4">
-              <div className="flex items-start justify-between">
-                <div>
-                  <div className="flex items-center gap-2">
-                    <h3 className="font-semibold">{inquiry.name}</h3>
+            <div key={inquiry.id} className="bg-white rounded-lg shadow p-3 md:p-4">
+              <div className="flex items-start justify-between gap-2">
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-1.5 md:gap-2 flex-wrap">
+                    <h3 className="font-semibold text-sm md:text-base">{inquiry.name}</h3>
                     <span
-                      className={`inline-flex rounded-full px-2 py-0.5 text-xs font-medium ${
+                      className={`inline-flex rounded-full px-1.5 py-0.5 text-xs font-medium ${
                         statusColors[inquiry.status] ||
                         "bg-gray-100 text-gray-700"
                       }`}
@@ -68,20 +68,20 @@ export default function InquiriesPage() {
                       {inquiry.status}
                     </span>
                   </div>
-                  <p className="text-sm text-gray-500">{inquiry.email}</p>
-                  <p className="mt-1 font-medium">{inquiry.subject}</p>
-                  <p className="mt-2 text-sm text-gray-600 line-clamp-2">
+                  <p className="text-xs md:text-sm text-gray-500">{inquiry.email}</p>
+                  <p className="mt-1 font-medium text-sm">{inquiry.subject}</p>
+                  <p className="mt-1 md:mt-2 text-xs md:text-sm text-gray-600 line-clamp-2">
                     {inquiry.message}
                   </p>
-                  <p className="mt-2 text-xs text-gray-400">
+                  <p className="mt-1 md:mt-2 text-xs text-gray-400">
                     {new Date(inquiry.createdAt).toLocaleString()}
                   </p>
                 </div>
                 <Link
                   href={`/admin/inquiries/${inquiry.id}`}
-                  className="flex items-center gap-1 text-sm text-[#C6A24A] hover:underline"
+                  className="flex items-center gap-1 text-xs md:text-sm text-[#C6A24A] hover:underline shrink-0"
                 >
-                  <FiEye className="h-4 w-4" /> View
+                  <FiEye className="h-3.5 w-3.5 md:h-4 md:w-4" />
                 </Link>
               </div>
             </div>

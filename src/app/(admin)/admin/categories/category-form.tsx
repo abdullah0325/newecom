@@ -122,51 +122,51 @@ export function CategoryForm({
   }
 
   return (
-    <div className="p-8">
-      <div className="mb-6 flex items-center justify-between gap-4">
+    <div className="p-4 md:p-8">
+      <div className="mb-4 md:mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-[#1E1F1C]">
+          <h1 className="text-xl md:text-2xl font-bold text-[#1E1F1C]">
             {mode === "create" ? "Add Category" : "Edit Category"}
           </h1>
-          <p className="mt-1 text-sm text-[#5A5E55]">
+          <p className="mt-1 text-xs md:text-sm text-[#5A5E55]">
             Categories can be used for filtering on the public product listing.
           </p>
         </div>
         <Link
           href="/admin/categories"
-          className="rounded-lg border border-[#C6A24A]/25 bg-white px-4 py-2 text-sm font-medium text-[#1E1F1C] hover:bg-[#F6F1E7]"
+          className="rounded-lg border border-[#C6A24A]/25 bg-white px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-medium text-[#1E1F1C] hover:bg-[#F6F1E7]"
         >
           Back
         </Link>
       </div>
 
       {error && (
-        <div className="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div className="mb-3 md:mb-4 rounded-lg border border-red-200 bg-red-50 px-3 py-2 md:px-4 md:py-3 text-xs md:text-sm text-red-700">
           {error}
         </div>
       )}
 
       <form
         onSubmit={onSubmit}
-        className="grid gap-6 rounded-xl border border-[#C6A24A]/20 bg-white p-6 lg:grid-cols-2"
+        className="grid gap-4 md:gap-6 rounded-xl border border-[#C6A24A]/20 bg-white p-4 md:p-6 lg:grid-cols-2"
       >
-        <div className="space-y-4">
+        <div className="space-y-3 md:space-y-4">
           <div>
-            <label className="block text-sm font-medium text-[#1E1F1C]">Name</label>
+            <label className="block text-xs md:text-sm font-medium text-[#1E1F1C]">Name</label>
             <input
               value={values.name}
               onChange={(e) => setValues((v) => ({ ...v, name: e.target.value }))}
-              className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-[#C6A24A] focus:border-transparent"
+              className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-1.5 md:py-2 text-xs md:text-sm focus:ring-2 focus:ring-[#C6A24A] focus:border-transparent"
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-[#1E1F1C]">Slug</label>
+            <label className="block text-xs md:text-sm font-medium text-[#1E1F1C]">Slug</label>
             <input
               value={values.slug}
               onChange={(e) => setValues((v) => ({ ...v, slug: e.target.value }))}
-              className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 font-mono text-sm focus:ring-2 focus:ring-[#C6A24A] focus:border-transparent"
+              className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-1.5 md:py-2 font-mono text-xs md:text-sm focus:ring-2 focus:ring-[#C6A24A] focus:border-transparent"
               required
             />
           </div>

@@ -144,19 +144,19 @@ export function ProductForm({
   }
 
   return (
-    <div className="p-8">
-      <div className="mb-6 flex items-center justify-between gap-4">
+    <div className="p-4 md:p-8">
+      <div className="mb-4 md:mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-[#1E1F1C]">{mode === "create" ? "Add Product" : "Edit Product"}</h1>
-          <p className="mt-1 text-sm text-[#5A5E55]">Product mapping includes category, subcategory and collections.</p>
+          <h1 className="text-xl md:text-2xl font-bold text-[#1E1F1C]">{mode === "create" ? "Add Product" : "Edit Product"}</h1>
+          <p className="mt-1 text-xs md:text-sm text-[#5A5E55]">Product mapping includes category, subcategory and collections.</p>
         </div>
-        <Link href="/admin/products" className="rounded-lg border border-[#C6A24A]/25 bg-white px-4 py-2 text-sm font-medium text-[#1E1F1C] hover:bg-[#F6F1E7]">Back</Link>
+        <Link href="/admin/products" className="rounded-lg border border-[#C6A24A]/25 bg-white px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-medium text-[#1E1F1C] hover:bg-[#F6F1E7]">Back</Link>
       </div>
-      {error ? <div className="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div> : null}
-      <form onSubmit={onSubmit} className="grid gap-6 rounded-xl border border-[#C6A24A]/20 bg-white p-6 lg:grid-cols-2">
-        <div className="space-y-4">
-          <input value={values.title} onChange={(e) => setValues((v) => ({ ...v, title: e.target.value }))} className="w-full rounded-lg border border-gray-300 px-3 py-2" placeholder="Title" required />
-          <input value={values.handle} onChange={(e) => setValues((v) => ({ ...v, handle: e.target.value }))} className="w-full rounded-lg border border-gray-300 px-3 py-2" placeholder="Handle" required />
+      {error ? <div className="mb-3 md:mb-4 rounded-lg border border-red-200 bg-red-50 px-3 py-2 md:px-4 md:py-3 text-xs md:text-sm text-red-700">{error}</div> : null}
+      <form onSubmit={onSubmit} className="grid gap-4 md:gap-6 rounded-xl border border-[#C6A24A]/20 bg-white p-4 md:p-6 lg:grid-cols-2">
+        <div className="space-y-3 md:space-y-4">
+          <input value={values.title} onChange={(e) => setValues((v) => ({ ...v, title: e.target.value }))} className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm" placeholder="Title" required />
+          <input value={values.handle} onChange={(e) => setValues((v) => ({ ...v, handle: e.target.value }))} className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm" placeholder="Handle" required />
           <div className="grid gap-4 md:grid-cols-2">
             <input type="number" min={0} step="0.01" value={values.price} onChange={(e) => setValues((v) => ({ ...v, price: Number(e.target.value) }))} className="w-full rounded-lg border border-gray-300 px-3 py-2" placeholder="Price" required />
             <input type="number" min={0} step="0.01" value={values.compareAtPrice ?? ""} onChange={(e) => setValues((v) => ({ ...v, compareAtPrice: e.target.value ? Number(e.target.value) : null }))} className="w-full rounded-lg border border-gray-300 px-3 py-2" placeholder="Compare at" />
@@ -174,15 +174,15 @@ export function ProductForm({
           <textarea value={values.description ?? ""} onChange={(e) => setValues((v) => ({ ...v, description: e.target.value }))} rows={6} className="w-full rounded-lg border border-gray-300 px-3 py-2" placeholder="Description" />
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-3 md:space-y-4">
           <AdminImageUpload label="Featured image" folder="organocity/products" usedIn="product" value={values.featuredImage} onChange={(url) => setValues((v) => ({ ...v, featuredImage: url }))} />
           <AdminImageUpload label="Product images" folder="organocity/products" usedIn="product" mode="multiple" values={values.images} onChangeMany={(urls) => setValues((v) => ({ ...v, images: urls }))} />
-          <div className="rounded-lg border border-[#C6A24A]/20 bg-[#F6F1E7]/60 p-4">
+          <div className="rounded-lg border border-[#C6A24A]/20 bg-[#F6F1E7]/60 p-3 md:p-4">
             <p className="text-sm font-semibold text-[#1E1F1C]">Collections</p>
-            <input value={collectionSearch} onChange={(e) => setCollectionSearch(e.target.value)} className="mt-2 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm" placeholder="Search collections..." />
-            <div className="mt-3 max-h-44 space-y-2 overflow-auto">
+            <input value={collectionSearch} onChange={(e) => setCollectionSearch(e.target.value)} className="mt-2 w-full rounded-lg border border-gray-300 px-3 py-1.5 md:py-2 text-sm" placeholder="Search..." />
+            <div className="mt-2 md:mt-3 max-h-32 md:max-h-44 space-y-1.5 md:space-y-2 overflow-auto">
               {visibleCollections.map((collection) => (
-                <label key={collection.id} className="flex items-center gap-2 text-sm text-[#1E1F1C]">
+                <label key={collection.id} className="flex items-center gap-2 text-xs md:text-sm text-[#1E1F1C]">
                   <input
                     type="checkbox"
                     checked={values.collectionIds.includes(collection.id)}
@@ -198,9 +198,9 @@ export function ProductForm({
               ))}
             </div>
           </div>
-          <input value={values.tags.join(", ")} onChange={(e) => setValues((v) => ({ ...v, tags: e.target.value.split(",").map((s) => s.trim()).filter(Boolean) }))} className="w-full rounded-lg border border-gray-300 px-3 py-2" placeholder="Tags (comma-separated)" />
+          <input value={values.tags.join(", ")} onChange={(e) => setValues((v) => ({ ...v, tags: e.target.value.split(",").map((s) => s.trim()).filter(Boolean) }))} className="w-full rounded-lg border border-gray-300 px-3 py-1.5 md:py-2 text-sm" placeholder="Tags (comma-separated)" />
           <div className="flex justify-end">
-            <button type="submit" disabled={saving} className="rounded-lg bg-[#1F6B4F] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#17513D] disabled:opacity-50">{saving ? "Saving..." : "Save"}</button>
+            <button type="submit" disabled={saving} className="rounded-lg bg-[#1F6B4F] px-4 py-2 md:px-5 md:py-2.5 text-xs md:text-sm font-semibold text-white hover:bg-[#17513D] disabled:opacity-50">{saving ? "Saving..." : "Save"}</button>
           </div>
         </div>
       </form>

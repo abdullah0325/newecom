@@ -41,7 +41,6 @@ export default async function Page() {
     prisma.category.findMany({
       where: { parentId: null },
       orderBy: { order: "asc" },
-      take: 6,
       select: { id: true, name: true, slug: true, image: true },
     }),
     prisma.product.findMany({
