@@ -31,6 +31,7 @@ export type ProductFormValues = {
   vendor?: string;
   tags: string[];
   collectionIds: string[];
+  isFeatured: boolean;
 };
 
 function slugifyHandle(input: string) {
@@ -68,6 +69,7 @@ export function ProductForm({
     vendor: "OrganoCity",
     tags: [],
     collectionIds: [],
+    isFeatured: false,
     ...initialValues,
   });
   const [saving, setSaving] = useState(false);
@@ -199,6 +201,15 @@ export function ProductForm({
             </div>
           </div>
           <input value={values.tags.join(", ")} onChange={(e) => setValues((v) => ({ ...v, tags: e.target.value.split(",").map((s) => s.trim()).filter(Boolean) }))} className="w-full rounded-lg border border-gray-300 px-3 py-1.5 md:py-2 text-sm" placeholder="Tags (comma-separated)" />
+          <label className="flex items-center gap-2 text-sm text-[#1E1F1C]">
+            <input
+              type="checkbox"
+              checked={values.isFeatured}
+              onChange={(e) => setValues((v) => ({ ...v, isFeatured: e.target.checked }))}
+              className="rounded border-gray-300"
+            />
+            Mark as Featured Product
+          </label>
           <div className="flex justify-end">
             <button type="submit" disabled={saving} className="rounded-lg bg-[#1F6B4F] px-4 py-2 md:px-5 md:py-2.5 text-xs md:text-sm font-semibold text-white hover:bg-[#17513D] disabled:opacity-50">{saving ? "Saving..." : "Save"}</button>
           </div>

@@ -23,6 +23,7 @@ interface Product {
   tags: any;
   categoryId: string | null;
   subcategoryId: string | null;
+  isFeatured: boolean;
 }
 
 interface Props {
@@ -34,12 +35,14 @@ interface Props {
 export function HomeProducts({ categories, products, collections }: Props) {
   const [selectedCategory, setSelectedCategory] = useState<string>("");
 
+  const featuredProducts = products.filter(p => p.isFeatured);
+
   const filteredProducts = selectedCategory
     ? products.filter(p => {
         const cat = categories.find(c => c.slug === selectedCategory);
         return cat && (p.categoryId === cat.id || p.subcategoryId === cat.id);
       })
-    : products;
+    : featuredProducts;
 
   const otherProducts = selectedCategory
     ? products.filter(p => {

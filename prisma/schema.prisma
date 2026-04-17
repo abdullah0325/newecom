@@ -29,6 +29,7 @@ model Product {
   vendor           String   @default("OrganoCity")
   tags             Json     @default("[]")
   collectionIds    Json     @default("[]")
+  isFeatured      Boolean  @default(false)
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 }

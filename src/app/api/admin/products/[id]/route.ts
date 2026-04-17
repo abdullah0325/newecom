@@ -24,6 +24,7 @@ const productSchema = z.object({
   vendor: z.string().default("OrganoCity"),
   tags: z.array(z.string()).default([]),
   collectionIds: z.array(z.string()).default([]),
+  isFeatured: z.boolean().default(false),
 });
 
 export async function GET(

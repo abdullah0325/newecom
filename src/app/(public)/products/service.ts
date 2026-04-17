@@ -24,6 +24,7 @@ export async function getAllProductsForFilter() {
       tags: true,
       categoryId: true,
       subcategoryId: true,
+      isFeatured: true,
     },
   });
 }

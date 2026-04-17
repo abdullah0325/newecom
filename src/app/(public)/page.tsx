@@ -46,7 +46,7 @@ export default async function Page() {
       where: { status: "ACTIVE" },
       orderBy: { updatedAt: "desc" },
       take: 20,
-      select: { id: true, handle: true, title: true, price: true, compareAtPrice: true, featuredImage: true, images: true, tags: true, categoryId: true, subcategoryId: true },
+      select: { id: true, handle: true, title: true, price: true, compareAtPrice: true, featuredImage: true, images: true, tags: true, categoryId: true, subcategoryId: true, isFeatured: true },
     }),
     prisma.collection.findMany({
       orderBy: { updatedAt: "desc" },
