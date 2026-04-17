@@ -3,7 +3,7 @@ import { invariant } from "@esmate/utils";
 import { prisma } from "@/lib/prisma";
 
 export async function getProductList(cursor?: string) {
-  const products = await getAllProducts(cursor);
+  const products = await getAllProducts(cursor, 100);
   invariant(products, "products are not available");
   return products;
 }
@@ -13,10 +13,22 @@ export async function searchProducts(query: string) {
 }
 
 export async function getCategoriesForFilters() {
-  return prisma.category.findMany({
+  const categories = await prisma.category.findMany({
+    where: { parentId: null },
     orderBy: { order: "asc" },
     select: { id: true, name: true, slug: true },
   });
+
+  const subcategories = await prisma.category.findMany({
+    where: { parentId: { not: null } },
+    orderBy: { order: "asc" },
+    select: { id: true, name: true, slug: true, parentId: true },
+  });
+
+  return categories.map(cat => ({
+    ...cat,
+    subcategories: subcategories.filter(sub => sub.parentId === cat.id)
+  }));
 }
 
 export async function getProductsByCategorySlug(slug: string) {

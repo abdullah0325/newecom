@@ -3,7 +3,7 @@
 import { useCart } from "@/lib/commerce";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Menu,
   Search,
@@ -33,33 +33,11 @@ const mainMenuItems = [
   { text: "Co-message", href: "/co-message" },
 ];
 
-const shopItems = [
-  {
-    text: "Salt Lamps",
-    href: "/collections/natural-pink-salt-lamps",
-    image: "/graphics/organocity-spa.webp",
-  },
-  {
-    text: "Edible Salt",
-    href: "/collections/himalayan-pink-salt",
-    image: "/graphics/organocity-kitchen-salt.webp",
-  },
-  {
-    text: "Bath Salt",
-    href: "/collections/himalayan-bath-salt-soap",
-    image: "/graphics/essence-two.png",
-  },
-  {
-    text: "Inhaler",
-    href: "/collections/himalayan-salt-inhaler",
-    image: "/graphics/Himalayan salt inhaler.jpg",
-  },
-  {
-    text: "Shilajit",
-    href: "/collections/pure-himalayan-shilajit",
-    image: "/graphics/shilajit.jpg",
-  },
-];
+async function getShopCategories() {
+  const res = await fetch("/api/categories", { next: { revalidate: 60 } });
+  const data = await res.json();
+  return data.categories || [];
+}
 
 export function Header() {
   const pathname = usePathname();
@@ -67,6 +45,11 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
+  const [shopCategories, setShopCategories] = useState<Awaited<ReturnType<typeof getShopCategories>>>([]);
+
+  useEffect(() => {
+    getShopCategories().then(setShopCategories);
+  }, []);
 
   const isActive = (href: string) => pathname.startsWith(href);
 
@@ -128,12 +111,12 @@ export function Header() {
                       </div>
 
                       <div className="space-y-1">
-                        {shopItems.map((item) => (
+                        {shopCategories.map((item) => (
                           <Link
-                            key={item.href}
-                            href={item.href}
+                            key={item.id}
+                            href={`/category/${item.slug}`}
                             className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors ${
-                              isActive(item.href)
+                              isActive(`/category/${item.slug}`)
                                 ? "bg-[#1F6B4F]/10 text-[#1F6B4F]"
                                 : "hover:bg-white/60 text-[#1E1F1C]"
                             }`}
@@ -141,13 +124,13 @@ export function Header() {
                           >
                             <div className="relative h-8 w-8 overflow-hidden rounded border border-[#C6A24A]/25">
                               <Image
-                                src={item.image}
-                                alt={item.text}
+                                src={item.image || "/logo/organocityBackup.png"}
+                                alt={item.name}
                                 fill
                                 className="object-cover"
                               />
                             </div>
-                            <span className="font-medium">{item.text}</span>
+                            <span className="font-medium">{item.name}</span>
                           </Link>
                         ))}
                       </div>
@@ -242,7 +225,7 @@ export function Header() {
                 <Link
                   href="/products"
                   className={`text-sm font-semibold transition-colors hover:text-[#1F6B4F] ${
-                    isActive("/collections") || isActive("/products")
+                    isActive("/products") || isActive("/category")
                       ? "text-[#1F6B4F]"
                       : "text-[#1E1F1C]"
                   }`}
@@ -259,18 +242,18 @@ export function Header() {
               <div className="absolute left-1/2 top-full z-50 mt-4 w-[560px] -translate-x-1/2 opacity-0 pointer-events-none scale-95 transition-all duration-200 group-hover:opacity-100 group-hover:pointer-events-auto group-hover:scale-100">
                 <div className="overflow-hidden rounded-xl border border-[#C6A24A]/25 bg-white p-2 shadow-2xl">
                   <div className="grid grid-cols-4 gap-0.5 p-0.5">
-                    {shopItems.map((item) => (
+                    {shopCategories.slice(0, 8).map((item) => (
                       <Link
-                        key={item.href}
-                        href={item.href}
+                        key={item.id}
+                        href={`/category/${item.slug}`}
                         className={`group relative m-1 flex flex-col items-center rounded-lg p-3 transition-all hover:bg-[#1F6B4F]/5 hover:shadow-sm ${
-                          isActive(item.href) ? "bg-[#1F6B4F]/5" : ""
+                          isActive(`/category/${item.slug}`) ? "bg-[#1F6B4F]/5" : ""
                         }`}
                       >
                         <div className="relative mb-2 h-14 w-14 overflow-hidden rounded-full border border-[#C6A24A]/25">
                           <Image
-                            src={item.image}
-                            alt={item.text}
+                            src={item.image || "/logo/organocityBackup.png"}
+                            alt={item.name}
                             fill
                             className="object-cover transition-transform duration-300 group-hover:scale-110"
                             sizes="56px"
@@ -279,12 +262,12 @@ export function Header() {
 
                         <p
                           className={`text-center text-xs font-semibold leading-tight ${
-                            isActive(item.href)
+                            isActive(`/category/${item.slug}`)
                               ? "text-[#1F6B4F]"
                               : "text-[#1E1F1C]"
                           }`}
                         >
-                          {item.text}
+                          {item.name}
                         </p>
 
                         <div className="absolute inset-0 rounded-lg ring-1 ring-inset ring-transparent transition-all group-hover:ring-[#1F6B4F]/20" />
@@ -294,7 +277,7 @@ export function Header() {
 
                   <div className="border-t border-[#C6A24A]/20 bg-[#F6F1E7]/40 p-3">
                     <Link
-                      href="/collections"
+                      href="/products"
                       className="flex items-center justify-center gap-1.5 text-xs font-semibold text-[#5A5E55] transition-colors hover:text-[#1F6B4F]"
                     >
                       View all products

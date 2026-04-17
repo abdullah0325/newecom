@@ -16,14 +16,12 @@ export default function InstallPrompt() {
   useEffect(() => {
     if (!isInstalled && showInstallPrompt && mounted) {
       setIsVisible(true);
+    } else {
+      setIsVisible(false);
     }
   }, [showInstallPrompt, isInstalled, mounted]);
 
-  if (!mounted || isInstalled) {
-    return null;
-  }
-
-  if (!isVisible) {
+  if (!mounted || isInstalled || !isVisible) {
     return null;
   }
 
