@@ -55,31 +55,33 @@ export function HomeProducts({ categories, products, collections }: Props) {
 
   return (
     <>
-      <section className="mx-auto w-full max-w-7xl px-6 lg:px-8">
-        <div className="mb-6 flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-[#1E1F1C]">Shop by Categories</h2>
+      <section className="lg:mx-auto lg:w-full lg:max-w-7xl lg:px-8">
+        <div className="hidden lg:flex items-center justify-between mb-4">
+          <h2 className="text-xl font-bold text-[#1E1F1C]">Shop by Categories</h2>
           <Link href="/products" className="text-sm font-semibold text-[#1F6B4F] hover:underline">
             View All
           </Link>
         </div>
-        <div className="flex flex-wrap justify-center gap-4">
-          {categories.map((category) => (
-            <button
-              key={category.id}
-              onClick={() => setSelectedCategory(selectedCategory === category.slug ? "" : category.slug)}
-              className={`group flex flex-col items-center ${selectedCategory === category.slug ? 'ring-2 ring-[#1F6B4F] rounded-full' : ''}`}
-            >
-              <div className="relative h-24 w-24 overflow-hidden rounded-full border-2 border-[#C6A24A]/30 shadow-sm transition hover:border-[#C6A24A] hover:shadow-md sm:h-28 sm:w-28">
-                <Image
-                  src={category.image || "/logo/organocityBackup.png"}
-                  alt={category.name}
-                  fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-110"
-                />
-              </div>
-              <span className="mt-2 text-center text-xs font-semibold text-[#1E1F1C]">{category.name}</span>
-            </button>
-          ))}
+        <div className="flex gap-3 pb-2 overflow-hidden relative">
+          <div className="flex gap-3 animate-scroll scrollbar-hide">
+            {[...categories, ...categories].map((category, idx) => (
+              <button
+                key={`${category.id}-${idx}`}
+                onClick={() => setSelectedCategory(selectedCategory === category.slug ? "" : category.slug)}
+                className={`group flex flex-col items-center flex-shrink-0 ${selectedCategory === category.slug ? 'ring-2 ring-[#1F6B4F] rounded-full' : ''}`}
+              >
+                <div className="relative h-16 w-16 sm:h-20 sm:w-20 lg:h-24 lg:w-24 overflow-hidden rounded-full border-2 border-[#C6A24A]/30 shadow-sm transition hover:border-[#C6A24A] hover:shadow-md">
+                  <Image
+                    src={category.image || "/logo/organocityBackup.png"}
+                    alt={category.name}
+                    fill
+                    className="object-cover transition-transform duration-300 group-hover:scale-110"
+                  />
+                </div>
+                <span className="mt-1 sm:mt-2 text-center text-xs font-semibold text-[#1E1F1C]">{category.name}</span>
+              </button>
+            ))}
+          </div>
         </div>
       </section>
 

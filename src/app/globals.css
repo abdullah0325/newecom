@@ -48,8 +48,19 @@
   }
 }
 
-.animate-marquee {
-  animation: marquee 20s linear infinite;
+@keyframes scroll-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-scroll {
+  display: flex;
+  width: calc(200%);
+  animation: scroll-left 20s linear infinite;
+}
+
+.animate-scroll:hover {
+  animation-play-state: paused;
 }
 
 .scrollbar-hide::-webkit-scrollbar {
