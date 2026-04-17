@@ -215,8 +215,8 @@ export function BlogForm({
           <textarea
             value={values.content ?? ""}
             onChange={(e) => setValues((v) => ({ ...v, content: e.target.value }))}
-            rows={6} md:rows={10}
-            className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-1.5 md:py-2 text-xs md:text-sm focus:ring-2 focus:ring-[#C6A24A] focus:border-transparent"
+            rows={6}
+            className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:ring-2 focus:ring-[#C6A24A] focus:border-transparent"
           />
         </div>
 
@@ -267,8 +267,8 @@ export function BlogForm({
                 onChange={(e) =>
                   setValues((v) => ({ ...v, seoDescription: e.target.value }))
                 }
-                rows={2} md:rows={3}
-                className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-1.5 md:py-2 text-xs md:text-sm focus:ring-2 focus:ring-[#C6A24A] focus:border-transparent"
+                rows={3}
+                className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:ring-2 focus:ring-[#C6A24A] focus:border-transparent"
               />
             </div>
           </div>

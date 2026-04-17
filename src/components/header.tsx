@@ -45,7 +45,7 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
-  const [shopCategories, setShopCategories] = useState<Awaited<ReturnType<typeof getShopCategories>>>([]);
+  const [shopCategories, setShopCategories] = useState<{id: string; name: string; slug: string; image: string | null}[]>([]);
 
   useEffect(() => {
     getShopCategories().then(setShopCategories);

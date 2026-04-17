@@ -112,6 +112,7 @@ export default function OrdersPage() {
                 ))}
               </tbody>
             </table>
+          </div>
         </div>
       )}
     </div>
