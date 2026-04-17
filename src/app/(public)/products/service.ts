@@ -8,6 +8,26 @@ export async function getProductList(cursor?: string) {
   return products;
 }
 
+export async function getAllProductsForFilter() {
+  return prisma.product.findMany({
+    where: { status: "ACTIVE" },
+    orderBy: { updatedAt: "desc" },
+    take: 100,
+    select: {
+      id: true,
+      handle: true,
+      title: true,
+      price: true,
+      compareAtPrice: true,
+      featuredImage: true,
+      images: true,
+      tags: true,
+      categoryId: true,
+      subcategoryId: true,
+    },
+  });
+}
+
 export async function searchProducts(query: string) {
   return searchProductsInDb(query);
 }

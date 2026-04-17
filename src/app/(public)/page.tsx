@@ -9,8 +9,7 @@ import Testimonials from "@/components/Testimonials";
 import Hero from "@/components/Hero";
 import { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
-import Image from "next/image";
-import { StoreProductCard } from "@/components/store-product-card-wrapper";
+import { HomeProducts } from "@/components/home-products";
 
 export const metadata: Metadata = {
   title: "OrganoCity | Natural Products, Herbal Care, Shilajit & Pink Salt",
@@ -37,7 +36,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const [categories, featuredProducts, collections] = await Promise.all([
+  const [categories, products, collections] = await Promise.all([
     prisma.category.findMany({
       where: { parentId: null },
       orderBy: { order: "asc" },
@@ -46,17 +45,8 @@ export default async function Page() {
     prisma.product.findMany({
       where: { status: "ACTIVE" },
       orderBy: { updatedAt: "desc" },
-      take: 8,
-      select: {
-        id: true,
-        handle: true,
-        title: true,
-        price: true,
-        compareAtPrice: true,
-        featuredImage: true,
-        images: true,
-        tags: true,
-      },
+      take: 20,
+      select: { id: true, handle: true, title: true, price: true, compareAtPrice: true, featuredImage: true, images: true, tags: true, categoryId: true, subcategoryId: true },
     }),
     prisma.collection.findMany({
       orderBy: { updatedAt: "desc" },
@@ -68,87 +58,7 @@ export default async function Page() {
   return (
     <div className="flex flex-col gap-16 pb-10 bg-[#F6F1E7]">
       <Hero />
-
-      <section className="mx-auto w-full max-w-7xl px-6 lg:px-8">
-        <div className="mb-6 flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-[#1E1F1C]">Shop by Categories</h2>
-          <Link href="/products" className="text-sm font-semibold text-[#1F6B4F] hover:underline">
-            Shop Now
-          </Link>
-        </div>
-        <div className="flex flex-wrap justify-center gap-4">
-          {categories.map((category) => (
-            <Link
-              key={category.id}
-              href={`/category/${category.slug}`}
-              className="group flex flex-col items-center"
-            >
-              <div className="relative h-24 w-24 overflow-hidden rounded-full border-2 border-[#C6A24A]/30 shadow-sm transition hover:border-[#C6A24A] hover:shadow-md sm:h-28 sm:w-28">
-                <Image
-                  src={category.image || "/logo/organocityBackup.png"}
-                  alt={category.name}
-                  fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-110"
-                />
-              </div>
-              <span className="mt-2 text-center text-xs font-semibold text-[#1E1F1C]">{category.name}</span>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <section className="mx-auto w-full max-w-7xl px-6 lg:px-8">
-        <h2 className="mb-6 text-2xl font-bold text-[#1E1F1C]">Featured Products</h2>
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {featuredProducts.map((product) => {
-            const firstImage = Array.isArray(product.images)
-              ? product.images.find((x): x is string => typeof x === "string")
-              : null;
-            const firstTag = Array.isArray(product.tags)
-              ? product.tags.find((x): x is string => typeof x === "string")
-              : undefined;
-            return (
-              <StoreProductCard
-                key={product.handle}
-                handle={product.handle}
-                title={product.title}
-                featuredImageUrl={product.featuredImage || firstImage || "/logo/organocityBackup.png"}
-                price={{ amount: Number(product.price || 0).toFixed(2), currencyCode: "PKR" }}
-                compareAtPrice={
-                  product.compareAtPrice
-                    ? { amount: Number(product.compareAtPrice).toFixed(2), currencyCode: "PKR" }
-                    : null
-                }
-                tag={firstTag}
-                productId={product.id}
-              />
-            );
-          })}
-        </div>
-      </section>
-
-      <section className="mx-auto w-full max-w-7xl px-6 lg:px-8">
-        <h2 className="mb-6 text-2xl font-bold text-[#1E1F1C]">Collections</h2>
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
-          {collections.map((collection) => (
-            <Link
-              key={collection.id}
-              href={`/collections/${collection.handle}`}
-              className="group overflow-hidden rounded-2xl border border-[#C6A24A]/20 bg-white"
-            >
-              <div className="relative aspect-[16/10]">
-                <Image
-                  src={collection.image || "/logo/organocityBackup.png"}
-                  alt={collection.title}
-                  fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-              </div>
-              <div className="p-4 text-lg font-semibold text-[#1E1F1C]">{collection.title}</div>
-            </Link>
-          ))}
-        </div>
-      </section>
+      <HomeProducts categories={categories} products={products} collections={collections} />
 
       {/* Benefits Section */}
       <section className="mx-auto max-w-7xl px-6 lg:px-8">
